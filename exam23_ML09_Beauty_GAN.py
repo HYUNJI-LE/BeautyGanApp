@@ -18,13 +18,13 @@ import numpy as np
 
 
 detector = dlib.get_frontal_face_detector()
-sp = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat') #dlib에서 배포하는 모델로 , 얼굴에 다섯개의 랜드마크를 찾아주는 모델 
+sp = dlib.shape_predictor('../models/shape_predictor_5_face_landmarks.dat') #dlib에서 배포하는 모델로 , 얼굴에 다섯개의 랜드마크를 찾아주는 모델
 
 
 # In[3]:
 
 
-img = dlib.load_rgb_image('./imgs/12.jpg')
+img = dlib.load_rgb_image('../imgs/12.jpg')
 plt.figure(figsize=(16,10))
 plt.imshow(img)
 plt.show()
@@ -85,7 +85,7 @@ def align_faces(img):
     faces = dlib.get_face_chips(img, objs, size=256, padding=0.35) #얼굴 영역만 잘라서 이미지를 만들어준 것을 저장 
     #padding : 얼굴 영역 이외에 같이 출력할 여백
     return faces
-test_img = dlib.load_rgb_image('./imgs/03.jpg')
+test_img = dlib.load_rgb_image('../imgs/03.jpg')
 test_faces = align_faces(test_img)
 fig,axes = plt.subplots(1,len(test_faces)+1, figsize=(20,16))
 axes[0].imshow(test_img) #가장 첫번째 supplot 에 원본 이미지 출력 
@@ -98,8 +98,8 @@ for i, face in enumerate(test_faces): #for 문을 돌면서 subplot에 얼굴이
 
 sess= tf.Session()
 sess.run(tf.global_variables_initializer()) #모델 초기화
-saver = tf.train.import_meta_graph('./models/model.meta') #모델 불러오기 
-saver.restore(sess, tf.train.latest_checkpoint('./models')) #모델 세션 초기화
+saver = tf.train.import_meta_graph('../models/model.meta') #모델 불러오기
+saver.restore(sess, tf.train.latest_checkpoint('../models')) #모델 세션 초기화
 graph = tf.get_default_graph()
 X = graph.get_tensor_by_name('X:0')
 Y = graph.get_tensor_by_name('Y:0')
@@ -120,9 +120,9 @@ def deprocess(img):
 # In[47]:
 
 
-img1 = dlib.load_rgb_image('./imgs/no_makeup/xfsy_0068.png')
+img1 = dlib.load_rgb_image('../imgs/no_makeup/xfsy_0068.png')
 img1_faces = align_faces(img1)#소스 이미지 
-img2 = dlib.load_rgb_image('./imgs/makeup/vFG112.png')#레퍼런스 이미지
+img2 = dlib.load_rgb_image('../imgs/makeup/vFG112.png')#레퍼런스 이미지
 img2_faces = align_faces(img2)
 
 fig,axes = plt.subplots(1,2,figsize=(16,10))
